@@ -4,13 +4,12 @@ const status = root => root.querySelector('[data-status]');
 const button = (label, action, primary = false) => `<button type="button" class="${primary ? 'button' : 'button-secondary button-small'}" data-action="${action}">${label}</button>`;
 
 function reaction(root, cleanups) {
-  base(root, 'Reaction time test', `<div class="tool-stage"><div class="tool-controls">${button('Start', 'start', true)} ${button('Reset', 'reset')}</div><button class="reaction-target" data-target disabled>Wait for green</button></div><div class="measurement-grid"><div class="measurement"><span class="measurement__label">Last reaction</span><strong data-result>—</strong></div><div class="measurement"><span class="measurement__label">Best this session</span><strong data-best>—</strong></div></div><p class="status" data-status role="status">Start when ready. Click the target only after it changes.</p>`);
-  const start = root.querySelector('[data-action=start]'), target = root.querySelector('[data-target]'), result = root.querySelector('[data-result]'), best = root.querySelector('[data-best]'), note = status(root);
+  base(root, 'Reaction time test', `<div class="tool-stage"><button type="button" class="reaction-target" data-target>Start test</button></div><div class="measurement-grid"><div class="measurement"><span class="measurement__label">Last reaction</span><strong data-result>—</strong></div><div class="measurement"><span class="measurement__label">Best this session</span><strong data-best>—</strong></div></div><p class="status" data-status role="status">Click the blue button to begin. Then wait for its label to change.</p>`);
+  const target = root.querySelector('[data-target]'), result = root.querySelector('[data-result]'), best = root.querySelector('[data-best]'), note = status(root);
   let timer = 0, started = 0, ready = false, bestValue = Infinity;
-  const reset = () => { clearTimeout(timer); ready = false; target.disabled = true; target.classList.remove('is-ready'); target.textContent = 'Wait for green'; result.textContent = best.textContent = '—'; bestValue = Infinity; note.textContent = 'Start when ready. Click the target only after it changes.'; };
-  start.addEventListener('click', () => { clearTimeout(timer); ready = false; target.disabled = false; target.classList.remove('is-ready'); target.textContent = 'Wait'; note.textContent = 'Wait for the target to change.'; timer = setTimeout(() => { ready = true; started = performance.now(); target.classList.add('is-ready'); target.textContent = 'Click now'; note.textContent = 'Click now.'; }, 1200 + Math.random() * 2200); });
-  target.addEventListener('click', () => { if (!ready) { clearTimeout(timer); target.disabled = true; target.textContent = 'Too soon'; note.textContent = 'That was before the change. Start again when ready.'; return; } const value = Math.round(performance.now() - started); result.textContent = `${value} ms`; bestValue = Math.min(bestValue, value); best.textContent = `${bestValue} ms`; target.disabled = true; target.classList.remove('is-ready'); target.textContent = 'Recorded'; ready = false; note.textContent = 'Recorded locally. Try again if you want another sample.'; });
-  root.querySelector('[data-action=reset]').addEventListener('click', reset); cleanups.push(() => clearTimeout(timer));
+  const arm = () => { clearTimeout(timer); ready = false; target.classList.remove('is-ready'); target.classList.add('is-waiting'); target.textContent = 'Wait for blue'; note.textContent = 'Keep watching the button. Do not click until it changes.'; timer = setTimeout(() => { ready = true; started = performance.now(); target.classList.remove('is-waiting'); target.classList.add('is-ready'); target.textContent = 'Click now'; note.textContent = 'Click now.'; }, 1200 + Math.random() * 2200); };
+  target.addEventListener('click', () => { if (ready) { const value = Math.round(performance.now() - started); result.textContent = `${value} ms`; bestValue = Math.min(bestValue, value); best.textContent = `${bestValue} ms`; ready = false; target.classList.remove('is-ready'); target.textContent = 'Try again'; note.textContent = 'Recorded locally. Click the button for another attempt.'; return; } if (target.classList.contains('is-waiting')) { clearTimeout(timer); target.classList.remove('is-waiting'); target.textContent = 'Too soon — try again'; note.textContent = 'That was before the change. Click the button to restart.'; return; } arm(); });
+  cleanups.push(() => clearTimeout(timer));
 }
 
 function connection(root, cleanups) {
@@ -23,10 +22,18 @@ function qr(root) {
   base(root, 'QR code test', `<div class="tool-stage qr-stage"><img class="qr-code" alt="QR code for the Test Institute QR code test page" src="data:image/png;base64,${qrPng}"><p>Scan this code with a phone camera. It opens this QR test page.</p></div><p class="status" data-status role="status">The QR code is bundled with this page; no QR service is contacted.</p>`);
 }
 
-function printPage(root) {
+function printPage(root, cleanups) {
   base(root, 'Print test page', `<div class="tool-stage print-sheet"><h2>Print test page</h2><p>Small text · large text · rules · slate blue · black</p><div class="print-bars"><i></i><i></i><i></i><i></i></div><p>Use your browser’s preview to check margins, colour and clipping before printing.</p><div class="tool-controls">${button('Open print dialog', 'print', true)}</div></div><p class="status" data-status role="status">Your browser controls the printer and print settings.</p>`);
   root.querySelector('[data-action=print]').addEventListener('click', () => { document.body.classList.add('print-test-active'); window.print(); });
   window.addEventListener('afterprint', () => document.body.classList.remove('print-test-active')); cleanups.push(() => document.body.classList.remove('print-test-active'));
+}
+
+function wifi(root, cleanups) {
+  base(root, 'Wi-Fi speed test', `<div class="tool-stage"><div class="tool-controls">${button('Measure speed', 'measure', true)}</div><div class="measurement-grid"><div class="measurement"><span class="measurement__label">Download sample</span><strong data-download>—</strong></div><div class="measurement"><span class="measurement__label">Upload sample</span><strong data-upload>—</strong></div></div></div><p class="status" data-status role="status">This uses a 2 MB file served by this website. It measures this route, not Wi-Fi signal strength.</p>`);
+  const run = root.querySelector('[data-action=measure]'), download = root.querySelector('[data-download]'), upload = root.querySelector('[data-upload]'), note = status(root);
+  const bytes = 2 * 1024 * 1024, speed = (size, ms) => `${((size * 8) / (ms * 1000)).toFixed(1)} Mbps`;
+  const measure = async () => { run.disabled = true; run.textContent = 'Measuring…'; download.textContent = upload.textContent = '…'; try { note.textContent = 'Downloading the test file…'; const downStart = performance.now(); const response = await fetch(`/assets/speed-sample.bin?run=${Date.now()}`, { cache: 'no-store' }); if (!response.ok) throw new Error('download'); const payload = await response.arrayBuffer(); download.textContent = speed(payload.byteLength, performance.now() - downStart); note.textContent = 'Uploading a matching test sample…'; const upStart = performance.now(); const uploadResponse = await fetch('/speed-test-upload', { method: 'POST', headers: { 'Content-Type': 'application/octet-stream' }, body: new Uint8Array(bytes) }); if (!uploadResponse.ok) throw new Error('upload'); upload.textContent = speed(bytes, performance.now() - upStart); note.textContent = 'Done. Results are a short sample to this website and can vary between runs.'; } catch (error) { if (download.textContent === '…') download.textContent = 'Unavailable'; upload.textContent = 'Unavailable'; note.textContent = 'This host could not complete the speed sample. Download requires the bundled file; upload requires a same-site measurement endpoint.'; } finally { run.disabled = false; run.textContent = 'Measure again'; } };
+  run.addEventListener('click', measure); cleanups.push(() => { run.disabled = true; });
 }
 
 function pdfBytes() {
@@ -53,5 +60,5 @@ function movie(root, cleanups) {
 }
 
 export function mountExtraTool(root, kind) {
-  const cleanups = []; const actions = { reaction, connection, qr, print: printPage, pdf, sound, image, movie }; if (!actions[kind]) throw new RangeError(`Unknown extra tool: ${kind}`); actions[kind](root, cleanups); return () => cleanups.splice(0).forEach(cleanup => cleanup());
+  const cleanups = []; const actions = { reaction, connection, wifi, qr, print: printPage, pdf, sound, image, movie }; if (!actions[kind]) throw new RangeError(`Unknown extra tool: ${kind}`); actions[kind](root, cleanups); return () => cleanups.splice(0).forEach(cleanup => cleanup());
 }
