@@ -1,0 +1,4 @@
+/* Hallmark clean-mode cascade: intentionally loaded after every page-specific stylesheet. */
+html,body{overflow-x:clip}
+*,*::before,*::after{border-radius:0!important}
+.steps{counter-reset:none}.steps li{display:block}.steps li::before{content:none;display:none}

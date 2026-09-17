@@ -11,7 +11,8 @@ if (search) {
       card.hidden = !visible; count += Number(visible);
     }
     document.querySelector('#no-results').hidden = count > 0;
-    document.querySelector('#result-count').textContent = `${count} ${count === 1 ? 'test' : 'tests'}`;
+    const resultCount = document.querySelector('#result-count');
+    if (resultCount) resultCount.textContent = `${count} ${count === 1 ? 'test' : 'tests'}`;
   };
   search.addEventListener('input', filterCards);
   filters.forEach(button => button.addEventListener('click', () => {
@@ -39,7 +40,7 @@ if (root) {
   if (query.get('setup') === 'call' && ['webcam','microphone','headphone'].includes(kind)) {
     const nav = document.createElement('nav'); nav.className = 'call-progress'; nav.setAttribute('aria-label','Call setup steps');
     const steps = [['webcam','Camera'],['microphone','Microphone'],['headphone','Headphones']];
-    nav.innerHTML = '<span>Check your call setup</span>' + steps.map(([id,label],i) => `<a href="/${id}-test/?setup=call" ${id === kind ? 'aria-current="step"' : ''}>${i+1}. ${label}</a>`).join('');
+    nav.innerHTML = '<span>Check your call setup</span>' + steps.map(([id,label]) => `<a href="/${id}-test/?setup=call" ${id === kind ? 'aria-current="step"' : ''}>${label}</a>`).join('');
     document.querySelector('.tool-heading').before(nav);
   }
 }
