@@ -28,9 +28,9 @@ if (search) {
 const root = document.querySelector('#tool-root');
 if (root) {
   const kind = root.dataset.tool;
-  const modulePath = ['webcam', 'microphone', 'headphone'].includes(kind) ? './media-tools.js' : './input-tools.js';
+  const modulePath = ['webcam', 'microphone', 'headphone'].includes(kind) ? './media-tools.js' : ['keyboard', 'mouse', 'screen', 'touch', 'gamepad'].includes(kind) ? './input-tools.js' : './extra-tools.js';
   import(modulePath).then(module => {
-    const mount = module.mountMediaTool || module.mountInputTool;
+    const mount = module.mountMediaTool || module.mountInputTool || module.mountExtraTool;
     mount(root, kind);
   }).catch(() => {
     root.innerHTML = '<div class="tool-error"><h2>The test could not load</h2><p>Reload this page to try again. The guide below is still available.</p><button class="button" id="reload-tool">Reload page</button></div>';
