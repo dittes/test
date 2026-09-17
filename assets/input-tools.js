@@ -154,6 +154,9 @@ function mountScreen(root, cleanups) {
         <button type="button" class="button-secondary button-small" data-action="dark">Dark</button>
         <button type="button" class="button-secondary button-small" data-action="light">Light</button>
         <button type="button" class="button-secondary button-small" data-action="gradient">Gradient</button>
+        <button type="button" class="button-secondary button-small" data-action="uniformity">Uniformity</button>
+        <button type="button" class="button-secondary button-small" data-action="sharpness">Sharpness</button>
+        <button type="button" class="button-secondary button-small" data-action="gamma">Gamma</button>
         <button type="button" class="button-secondary button-small" data-action="fullscreen">Full screen</button>
         <button type="button" class="button-secondary button-small" data-action="exit" disabled>Exit full screen</button>
       </div>
@@ -161,10 +164,12 @@ function mountScreen(root, cleanups) {
     <div class="measurement-grid" aria-label="Screen information">
       <div class="measurement"><span class="measurement__label">Viewport</span><strong data-viewport>—</strong></div>
       <div class="measurement"><span class="measurement__label">Pattern</span><strong data-current-pattern>White</strong></div>
-      <div class="measurement"><span class="measurement__label">Your observation</span><strong data-observation>Not recorded</strong></div>
+      <div class="measurement"><span class="measurement__label">Pixel scaling</span><strong data-scaling>—</strong></div>
+      <div class="measurement"><span class="measurement__label">Colour gamut</span><strong data-gamut>—</strong></div>
+      <div class="measurement"><span class="measurement__label">Colour depth</span><strong data-depth>—</strong></div>
     </div>
     <fieldset class="field observation-field"><legend>What do you see?</legend><label><input type="radio" name="screen-observation" value="Looks even"> Looks even</label><label><input type="radio" name="screen-observation" value="I see a mark or uneven area"> I see a mark or uneven area</label><label><input type="radio" name="screen-observation" value="Not sure"> Not sure</label></fieldset>
-    <p class="help-note">These are local patterns for visual inspection. They can help you notice a mark, tint, or uneven area, but they cannot automatically detect dead pixels, prove a display fault, or measure refresh rate.</p>
+    <p class="help-note">These are browser-generated patterns for visual inspection: solid fields for fixed pixels, grey for uniformity, gradients for banding, sharpness and gamma references. Browser-reported display details are not a calibration or hardware diagnosis.</p>
     <p class="status" data-status role="status" aria-live="polite">Choose a pattern and inspect it at a comfortable brightness.</p>`);
   const stage = root.querySelector("[data-screen-stage]");
   const pattern = root.querySelector("[data-pattern]");
@@ -175,15 +180,19 @@ function mountScreen(root, cleanups) {
   const fullscreen = root.querySelector("[data-action=fullscreen]");
   const exit = root.querySelector("[data-action=exit]");
   let index = 0;
-  const setViewport = () => { viewport.textContent = `${window.innerWidth} × ${window.innerHeight}`; };
+  const setViewport = () => { viewport.textContent = `${window.innerWidth} × ${window.innerHeight}`; root.querySelector('[data-scaling]').textContent = `${window.devicePixelRatio || 1}×`; root.querySelector('[data-depth]').textContent = `${screen.colorDepth || '—'} bit`; root.querySelector('[data-gamut]').textContent = matchMedia('(color-gamut: rec2020)').matches ? 'Rec. 2020' : matchMedia('(color-gamut: p3)').matches ? 'Display P3' : 'sRGB'; };
   const setSolid = () => { const [name, value] = colors[index]; pattern.style.background = value; pattern.style.color = name === "Black" ? "#fff" : "#172321"; patternName.textContent = name; current.textContent = name; pattern.setAttribute("aria-label", `${name} display pattern`); status.textContent = `${name} pattern shown. Inspect the screen with your own eyes.`; };
   const setGradient = () => { pattern.style.background = "linear-gradient(135deg, #101212, #f7f7f2 50%, #1759c5)"; pattern.style.color = "#172321"; patternName.textContent = "Gradient"; current.textContent = "Gradient"; pattern.setAttribute("aria-label", "Gradient display pattern"); status.textContent = "Gradient shown. Inspect it with your own eyes."; };
+  const setVisual = (name, background, text = '#172321') => { pattern.style.background = background; pattern.style.color = text; patternName.textContent = name; current.textContent = name; pattern.setAttribute('aria-label', `${name} display pattern`); status.textContent = `${name} shown. Inspect it with your own eyes.`; };
   const setFullScreenUi = () => { const isFull = document.fullscreenElement === stage; fullscreen.hidden = isFull; exit.disabled = !isFull; status.textContent = isFull ? "Full screen active. Use Escape or Exit full screen when finished." : "Full screen ended. Use Full screen to inspect a larger pattern."; };
   setViewport(); setSolid();
   cleanups.push(attach(root, root.querySelector("[data-action=next]"), "click", () => { index = (index + 1) % colors.length; setSolid(); }));
   cleanups.push(attach(root, root.querySelector("[data-action=dark]"), "click", () => { index = 1; setSolid(); }));
   cleanups.push(attach(root, root.querySelector("[data-action=light]"), "click", () => { index = 0; setSolid(); }));
   cleanups.push(attach(root, root.querySelector("[data-action=gradient]"), "click", setGradient));
+  cleanups.push(attach(root, root.querySelector('[data-action=uniformity]'), 'click', () => setVisual('50% grey uniformity', '#808080', '#fff')));
+  cleanups.push(attach(root, root.querySelector('[data-action=sharpness]'), 'click', () => setVisual('Sharpness grid', 'repeating-linear-gradient(0deg,#fff 0,#fff 1px,#111 1px,#111 2px), repeating-linear-gradient(90deg,transparent 0,transparent 9px,#d11 9px,#d11 10px)')));
+  cleanups.push(attach(root, root.querySelector('[data-action=gamma]'), 'click', () => setVisual('Gamma reference', 'repeating-linear-gradient(90deg,#777 0,#777 1px,#888 1px,#888 2px)')));
   cleanups.push(attach(root, fullscreen, "click", async () => { try { await stage.requestFullscreen(); } catch { status.textContent = "Full screen was unavailable. You can still inspect the pattern here."; } }));
   cleanups.push(attach(root, exit, "click", () => { if (document.fullscreenElement) document.exitFullscreen().catch(() => { status.textContent = "Could not exit full screen. Press Escape to return."; }); }));
   cleanups.push(attach(root, document, "fullscreenchange", setFullScreenUi));
@@ -196,6 +205,7 @@ function mountTouch(root, cleanups) {
     <div class="tool-stage touch-stage">
       <div class="tool-controls"><button type="button" class="button-secondary button-small" data-action="reset">Reset surface</button></div>
       <div class="mouse-pad" data-touch-pad tabindex="0" role="region" aria-label="Touchscreen test area" aria-describedby="touch-help">
+        <div class="touch-grid" data-touch-grid aria-hidden="true">${Array.from({ length: 48 }, () => '<i></i>').join('')}</div>
         <span class="mouse-pad__dot" data-touch-dot aria-hidden="true"></span>
         <p>Tap or move here</p><span class="mouse-pad__coordinates" data-touch-position>—</span>
       </div>
@@ -205,7 +215,7 @@ function mountTouch(root, cleanups) {
       <div class="measurement"><span class="measurement__label">Last position</span><strong data-touch-result>—</strong></div>
       <div class="measurement"><span class="measurement__label">State</span><strong data-touch-state>Ready</strong></div>
     </div>
-    <p id="touch-help" class="help-note">This surface reports only pointer events that arrive inside it. A mouse can use the surface too, but it is reported as a mouse pointer rather than touch input.</p>
+    <p id="touch-help" class="help-note">Trace across the grid to mark areas reached by touch. A mouse can use the surface too, but it is reported as a mouse pointer rather than touch input.</p>
     <p class="status" data-status role="status" aria-live="polite">Tap the test area to begin.</p>`);
   const pad = root.querySelector('[data-touch-pad]');
   const dot = root.querySelector('[data-touch-dot]');
@@ -219,13 +229,14 @@ function mountTouch(root, cleanups) {
     const x = Math.round(event.clientX - rect.left), y = Math.round(event.clientY - rect.top);
     const point = `${x} × ${y}`;
     position.textContent = result.textContent = point; type.textContent = event.pointerType || 'Unknown'; state.textContent = nextState;
+    const column = Math.min(7, Math.max(0, Math.floor((x / rect.width) * 8))); const row = Math.min(5, Math.max(0, Math.floor((y / rect.height) * 6))); root.querySelectorAll('[data-touch-grid] i')[row * 8 + column]?.classList.add('is-tested');
     dot.style.transform = `translate(${x}px, ${y}px)`; dot.classList.add('is-visible');
     status.textContent = `${nextState} received from ${event.pointerType || 'an unknown'} pointer at ${point}.`;
   };
   cleanups.push(attach(root, pad, 'pointerdown', (event) => { pad.focus(); update(event, 'Pressed'); }));
   cleanups.push(attach(root, pad, 'pointermove', (event) => { if (event.buttons || event.pointerType === 'touch') update(event, 'Moving'); }));
   cleanups.push(attach(root, pad, 'pointerup', (event) => update(event, 'Released')));
-  cleanups.push(attach(root, root.querySelector('[data-action=reset]'), 'click', () => { position.textContent = result.textContent = type.textContent = '—'; state.textContent = 'Ready'; dot.classList.remove('is-visible'); status.textContent = 'Surface cleared.'; }));
+  cleanups.push(attach(root, root.querySelector('[data-action=reset]'), 'click', () => { position.textContent = result.textContent = type.textContent = '—'; state.textContent = 'Ready'; dot.classList.remove('is-visible'); root.querySelectorAll('[data-touch-grid] i').forEach(cell => cell.classList.remove('is-tested')); status.textContent = 'Surface cleared.'; }));
 }
 
 function mountGamepad(root, cleanups) {
