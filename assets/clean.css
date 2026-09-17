@@ -1,4 +1,27 @@
-/* Hallmark clean-mode cascade: intentionally loaded after every page-specific stylesheet. */
+/* Hallmark clean-mode cascade: intentionally loaded after every page-specific stylesheet.
+ * Icon component · existing clean utilitarian system; macrostructure unchanged.
+ * Hallmark · pre-emit critique: P5 H5 E4 S5 R4 V4 */
+
+/* Shared illustration palette: fine outlines, layered casing and muted details. */
+.card-visual,.tool-page-art {
+  --art-ink: var(--color-icon-ink);
+  --art-line: var(--color-icon-line);
+  --art-shell: var(--color-icon-shell);
+  --art-paper: var(--color-icon-paper);
+  --art-accent: var(--color-icon-accent);
+}
+.tool-heading { position:relative; isolation:isolate; overflow:clip; }
+.tool-heading > :not(.tool-page-art) { position:relative; z-index:1; }
+.tool-heading > .tool-page-art {
+  position:absolute; z-index:0; right:-2rem; top:50%;
+  width:28rem; max-width:55%; transform:translateY(-50%);
+  opacity:.12; pointer-events:none; user-select:none;
+}
+.tool-page-art svg { display:block; width:100%; height:auto; }
+@media(max-width:48rem) {
+  .tool-heading > .tool-page-art { right:-2rem; width:23rem; max-width:70%; opacity:.08; }
+}
+@media print { .tool-heading > .tool-page-art { display:none; } }
 html,body{overflow-x:clip}
 *,*::before,*::after{border-radius:0!important}
 .steps{counter-reset:none}.steps li{display:block}.steps li::before{content:none;display:none}

@@ -52,3 +52,10 @@
   --dur-base: 180ms;
   --dur-slow: 320ms;
 }
+:root {
+  --color-icon-ink: oklch(49% .032 248);
+  --color-icon-line: oklch(70% .028 248);
+  --color-icon-shell: oklch(85% .018 248);
+  --color-icon-paper: oklch(96% .008 248);
+  --color-icon-accent: oklch(76% .048 85);
+}
