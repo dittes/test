@@ -21,16 +21,16 @@ if (search) {
     filterCards();
   }));
   document.querySelector('#clear-search').addEventListener('click', () => {
-    search.value = ''; filters[0].click(); search.focus();
+    search.value = ''; filters.find(button => button.dataset.category === 'all').click(); search.focus();
   });
   if (location.hash === '#test-search') search.focus();
 }
 const root = document.querySelector('#tool-root');
 if (root) {
   const kind = root.dataset.tool;
-  const modulePath = ['webcam', 'microphone', 'headphone'].includes(kind) ? './media-tools.js' : ['keyboard', 'mouse', 'screen', 'touch', 'gamepad'].includes(kind) ? './input-tools.js' : ['vibration', 'gyroscope', 'accelerometer', 'multitouch'].includes(kind) ? './mobile-tools.js' : './extra-tools.js';
+  const modulePath = ['reaction', 'sequence', 'aim', 'number', 'verbal', 'typing'].includes(kind) ? './brain-tools.js' : ['webcam', 'microphone', 'headphone'].includes(kind) ? './media-tools.js' : ['keyboard', 'mouse', 'screen', 'touch', 'gamepad'].includes(kind) ? './input-tools.js' : ['vibration', 'gyroscope', 'accelerometer', 'multitouch'].includes(kind) ? './mobile-tools.js' : './extra-tools.js';
   import(modulePath).then(module => {
-    const mount = module.mountMediaTool || module.mountInputTool || module.mountMobileTool || module.mountExtraTool;
+    const mount = module.mountBrainTool || module.mountMediaTool || module.mountInputTool || module.mountMobileTool || module.mountExtraTool;
     mount(root, kind);
   }).catch(() => {
     root.innerHTML = '<div class="tool-error"><h2>The test could not load</h2><p>Reload this page to try again. The guide below is still available.</p><button class="button" id="reload-tool">Reload page</button></div>';

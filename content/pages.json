@@ -1,0 +1,316 @@
+[
+  {
+    "id": "webcam",
+    "slug": "webcam-test",
+    "title": "Webcam Test — Check Your Camera Preview | Test Institute",
+    "description": "Open a local camera preview, choose a camera, and check the stream settings your browser reports.",
+    "eyebrow": "Camera & sound",
+    "intro": "See the camera stream your browser is receiving before a call or recording. Your camera stays off until you choose Start camera, and the preview stays on your device.",
+    "shortDescription": "A practical camera preview with device selection, reported stream settings and permission help.",
+    "category": "Camera & sound",
+    "keywords": ["webcam test", "test webcam", "camera test", "test my webcam"],
+    "steps": [
+      {"title": "Start the camera", "text": "Select Start camera and allow the browser permission prompt. Device names may appear only after permission is granted."},
+      {"title": "Check the preview", "text": "Look for a live image and choose another available camera if your browser offers a selector."},
+      {"title": "Read the reported settings", "text": "Use the displayed width, height, aspect ratio and requested frame-rate setting as a description of this stream."},
+      {"title": "Stop when you are finished", "text": "Select Stop camera before leaving if you no longer need the preview."}
+    ],
+    "method": [
+      "After a deliberate start, the page asks the browser for a video stream and displays it in a local video element. A visible preview shows that this browser received frames from the selected camera during this session.",
+      "The page can show properties the browser exposes for the active track, such as its delivered width, height, aspect ratio and frame-rate setting. These are reported stream settings, not laboratory measurements of actual frame delivery or camera performance.",
+      "A mirror control changes only the way the local preview is drawn. It does not establish how another application, meeting service or recipient will display your video. Stop ends the stream tracks used by this page."
+    ],
+    "limits": [
+      "A live preview cannot prove focus, colour accuracy, low-light quality, physical camera health, or whether a video-call app will use the same camera successfully.",
+      "The tool needs HTTPS, browser camera support and your permission. It cannot bypass an operating-system privacy setting, workplace policy, or another program holding the camera."
+    ],
+    "troubleshooting": [
+      {"title": "The permission prompt never appears", "text": "Check the address bar for a saved camera block, then reload after changing that site permission. Some browsers show no new prompt when a previous choice is stored."},
+      {"title": "The preview is black or frozen", "text": "Choose another camera if available, close camera apps and browser tabs, then stop and start again. A privacy shutter or laptop camera switch can also block the image."},
+      {"title": "No camera is listed", "text": "Reconnect an external camera, try a different USB port, and confirm that the operating system recognises it. Managed devices may restrict camera use."},
+      {"title": "It works here but not in a call", "text": "Choose the same camera in the call app’s device settings and check that app’s permission. This preview cannot configure Zoom, Teams, Meet, or another app."}
+    ],
+    "faqs": [
+      {"question": "Does this test record video?", "answer": "No. It shows a local browser preview after you start it. The preview is not saved or uploaded by this test."},
+      {"question": "Why is my camera name missing?", "answer": "Browsers often hide device labels before permission to reduce fingerprinting. Start the camera, allow access, and check the selector again."},
+      {"question": "Why is the image mirrored?", "answer": "Mirroring can make a front-facing preview feel natural. It changes this preview only; check your call application to learn what other people see."},
+      {"question": "Can this tell me whether my camera is good enough?", "answer": "It can show that this browser received a stream and report its settings. Lighting, bandwidth, call-app processing and your intended use still determine the result elsewhere."}
+    ],
+    "related": ["microphone", "headphone"]
+  },
+  {
+    "id": "microphone",
+    "slug": "microphone-test",
+    "title": "Microphone Test — Check Your Mic Input | Test Institute",
+    "description": "Check whether your browser receives microphone input, watch a relative level, and play back a short local sample where supported.",
+    "eyebrow": "Camera & sound",
+    "intro": "Start your microphone and speak normally to see whether sound reaches the browser. The level is a useful local signal check, not a measurement of room loudness.",
+    "shortDescription": "A local microphone check with a relative level and optional short playback sample.",
+    "category": "Camera & sound",
+    "keywords": ["microphone test", "test microphone", "mic test", "test my mic"],
+    "steps": [
+      {"title": "Start the microphone", "text": "Select Start microphone and allow permission when asked. Speak normally or make a short sound near the microphone."},
+      {"title": "Watch the level", "text": "Look for movement in the meter while you speak. Try the device selector if more than one microphone is available."},
+      {"title": "Make a short recording", "text": "If your browser supports recording, choose Record 15-second sample, then play the short local clip back to check the captured signal."},
+      {"title": "Stop the input", "text": "Use Stop microphone when finished so this page releases its audio stream."}
+    ],
+    "method": [
+      "With your permission, the page receives an audio stream and analyses its samples in the browser. Movement in the meter means the page is receiving changing audio values from that stream during the test.",
+      "The displayed level is a relative digital measure, commonly expressed in dBFS or a similar scale. It helps compare quieter and louder moments in this session, but it is not calibrated sound pressure, room noise, or a statement about how loud you are in decibels.",
+      "Recording begins only when you choose Record 15-second sample. The clip stays in this browser for local playback and is removed when you stop or reset the test. Playback checks the captured signal through the current output; it does not reproduce a remote call."
+    ],
+    "limits": [
+      "Input activity does not assess voice clarity, microphone quality, echo cancellation, noise suppression, room acoustics, or how a meeting service will process your sound.",
+      "The test cannot identify a physical microphone fault or override system settings. Recording and device selection vary across browsers and may be unavailable."
+    ],
+    "troubleshooting": [
+      {"title": "The meter does not move", "text": "Confirm permission, speak close to the intended microphone, and choose it in the device selector. Check the system input level and mute control as well."},
+      {"title": "The wrong microphone is active", "text": "Choose the desired device after permission, then stop and start the test. Bluetooth headsets and webcams often expose separate microphone entries."},
+      {"title": "Permission was denied", "text": "Open the browser’s site permissions from the address bar, allow the microphone, and reload. On managed devices, an administrator may control access."},
+      {"title": "Recording or playback is unavailable", "text": "Your browser may not support the recording format used by the page, or audio output may be muted. The live meter can still show whether input reaches the browser."}
+    ],
+    "faqs": [
+      {"question": "What does a moving meter prove?", "answer": "It shows this page received changing audio samples from the selected stream. It does not prove that another app, person, or service will hear you clearly."},
+      {"question": "Is the dB value a sound-level measurement?", "answer": "No. A relative dBFS-style display refers to digital signal level and has no fixed relationship to sound pressure in your room."},
+      {"question": "Does the test upload my recording?", "answer": "No. The microphone stream and any recording stay in this browser. A recording is created only when you choose to make one, then removed when you stop or reset the test."},
+      {"question": "Why does my headset microphone sound quiet?", "answer": "Check the selected input, system gain, headset mute switch and Bluetooth profile. A low local level can help identify where to look, but it cannot diagnose the headset."}
+    ],
+    "related": ["webcam", "headphone"]
+  },
+  {
+    "id": "headphone",
+    "slug": "headphone-test",
+    "title": "Headphone Test Online — Check Left & Right Audio | Test Institute",
+    "description": "Run an online headphone, headset, earphone or earbud test. Play left, right and both-channel audio prompts, then confirm what you hear.",
+    "eyebrow": "Camera & sound",
+    "intro": "Use this online headphone test to check left, right and both-channel audio on headphones, a headset, earphones, earbuds or speakers. Start at a comfortable volume; your confirmation is the result.",
+    "shortDescription": "An online headphone and headset test for a practical left/right channel and sound check.",
+    "category": "Camera & sound",
+    "keywords": ["headphone test", "headphone test online", "headset test", "test headset online", "earphone test online", "earbuds test online", "audio test headphones", "left right audio test"],
+    "steps": [
+      {"title": "Set a comfortable volume", "text": "Start low and adjust your device volume before playing a prompt. Do not use the test to listen at an uncomfortable level."},
+      {"title": "Play left and right", "text": "Use the separate left and right controls, listening for each cue in the expected ear or speaker."},
+      {"title": "Play both channels", "text": "Use the both-channel prompt to compare the combined output with the separate cues."},
+      {"title": "Confirm and stop", "text": "Mark what you heard and use Stop at any time. The page records your confirmation instead of assigning an automatic pass."}
+    ],
+    "method": [
+      "Audio begins only after your action, which avoids browser autoplay restrictions and gives you control over when sound starts. This online headphone, headset, earphone and earbud test sends short, controlled prompts to the left, right, or both channels where the browser and output route preserve that channel information.",
+      "The page asks you to confirm the cue you heard because web pages generally cannot inspect the physical headphones, speakers, volume setting, or route chosen by the operating system. A browser playback event alone is not evidence that sound reached your ears.",
+      "Short ramps at the beginning and end of a prompt can reduce abrupt clicks. The tool is for channel identification and practical setup checks, not a measurement of audio fidelity."
+    ],
+    "limits": [
+      "This is not a hearing test, a speaker-health diagnosis, a surround-sound verification, a noise-cancelling test, a sound-quality test, or a calibrated frequency-response measurement.",
+      "Bluetooth routing, operating-system balance settings, adapters, mono audio, browser output choice and physical fit can all change what you hear without being visible to this page."
+    ],
+    "troubleshooting": [
+      {"title": "There is no sound", "text": "Check device volume, browser tab mute, the selected output device and any inline remote or headset controls. Start playback again only after adjusting volume."},
+      {"title": "Both prompts play on one side", "text": "Check operating-system accessibility and audio-balance settings, then reconnect the headset or adapter. Try another audio source to isolate the route."},
+      {"title": "Left and right seem reversed", "text": "Confirm the headset orientation and cable/adaptor connections. The page can label the sent channel, but it cannot identify where a physical wiring change occurred."},
+      {"title": "The sound starts late or cuts out", "text": "Bluetooth devices may take time to wake or change profile. Pause, reconnect the device, and try again with other audio apps closed."}
+    ],
+    "faqs": [
+      {"question": "Can I use this online headphone test with a headset, earphones or earbuds?", "answer": "Yes. The page plays its prompts through the output device your browser is using, whether that is headphones, a headset, earphones, earbuds or speakers. It cannot identify the physical device automatically."},
+      {"question": "Can the page tell whether I heard the tone?", "answer": "No. It can send a prompt; your confirmation is the meaningful result."},
+      {"question": "Is this a hearing test?", "answer": "No. It does not use calibrated equipment or controlled listening conditions and cannot assess hearing."},
+      {"question": "Can it test noise cancelling or sound quality?", "answer": "No. The page does not measure noise cancellation, frequency response or overall sound quality. It is a practical audio and left/right channel check."},
+      {"question": "Will it test 5.1 or 7.1 surround sound?", "answer": "No. This page is limited to the controlled channels it explicitly presents and does not verify a multi-channel setup."},
+      {"question": "Why must I click Play?", "answer": "Browsers normally block autoplay with sound. A click also lets you set a safe volume before audio begins."}
+    ],
+    "related": ["microphone", "webcam"]
+  },
+  {
+    "id": "keyboard",
+    "slug": "keyboard-test",
+    "title": "Keyboard Test — Check Keys in Your Browser | Test Institute",
+    "description": "Press keys in an active test area to see the key and physical-code values your browser receives.",
+    "eyebrow": "Keyboard & screen",
+    "intro": "Use a focused test area to see which key presses reach the browser. It is useful when a key feels unreliable, and Escape leaves capture mode.",
+    "shortDescription": "A focused browser check for physical-key events, codes and modifier keys.",
+    "category": "Keyboard & screen",
+    "keywords": ["keyboard test", "test keyboard", "keyboard key test", "test keyboard keys"],
+    "steps": [
+      {"title": "Activate key capture", "text": "Select the test area before pressing a key. Capture applies only while that area is active."},
+      {"title": "Press the key once", "text": "Watch for the key label, physical-code value where supplied, and modifier state shown by the page."},
+      {"title": "Try problem keys carefully", "text": "Test letters, modifiers, arrows and function keys individually. Use Escape or Stop to leave the test."},
+      {"title": "Compare with another app", "text": "If a key is absent here, try a basic local app or another browser before drawing conclusions about hardware."}
+    ],
+    "method": [
+      "While the test pad is active, the page listens for browser keyboard events and marks a visual layout when it receives keydown and keyup. It can display the key value, modifier state, repeat flag and physical-code value when the browser supplies them.",
+      "A received event shows that this browser received that input while the page had focus. It does not reveal switch condition, keyboard firmware, scan rate, or every input path used by the operating system.",
+      "The test processes events only while the test surface is active. It keeps the visual set of tested keys for the current session, but does not save or upload typed text. Escape provides a predictable way to exit capture mode, alongside Reset."
+    ],
+    "limits": [
+      "Browser-reserved shortcuts, operating-system hotkeys, security controls and accessibility software may intercept keys before the page can see them.",
+      "Virtual keyboards, non-standard layouts and some assistive devices can expose different or incomplete values. A missing event is not a hardware diagnosis."
+    ],
+    "troubleshooting": [
+      {"title": "Nothing happens when I press a key", "text": "Click or tab into the active test area, then try again. Check whether the page shows a focused state and whether another window has taken focus."},
+      {"title": "A shortcut does not appear", "text": "Browser and operating-system shortcuts may be reserved. Test an ordinary character key first, then use another local application if the shortcut matters."},
+      {"title": "The wrong character appears", "text": "Check the selected keyboard layout, language and modifier keys in the operating system. The physical-code value can differ from the character produced."},
+      {"title": "A key works sometimes", "text": "Try repeated single presses, another USB port or a wired connection, and another app. This page can show received events but cannot identify the cause of intermittent hardware behaviour."}
+    ],
+    "faqs": [
+      {"question": "Does this page save what I type?", "answer": "No. It uses live key events while the test is active and keeps only the visual set of tested keys for the current session. It does not save or upload typed text."},
+      {"question": "Why are key and code different?", "answer": "Key describes the character or action produced under the current layout. Code, where available, identifies a physical keyboard position, so the two can differ."},
+      {"question": "Can it test laptop function keys?", "answer": "Some function keys are handled by firmware or the operating system and never reach the browser. The page can only show events it receives."},
+      {"question": "Can it diagnose a broken switch?", "answer": "No. It can provide a focused browser observation. A physical diagnosis needs comparison across applications and, if necessary, hardware support."}
+    ],
+    "related": ["mouse", "screen"]
+  },
+  {
+    "id": "mouse",
+    "slug": "mouse-test",
+    "title": "Mouse Test — Check Clicks, Movement and Scroll | Test Institute",
+    "description": "Use a local test surface to check pointer coordinates, button presses, double-clicks, and wheel events your browser receives.",
+    "eyebrow": "Keyboard & screen",
+    "intro": "Move, click and scroll inside the test area to see the pointer events your browser receives. Use it to compare a suspect button or wheel with another app.",
+    "shortDescription": "A local check for mouse or trackpad movement, clicks, double-clicks and scrolling.",
+    "category": "Keyboard & screen",
+    "keywords": ["mouse test", "mouse click test", "test mouse click", "click test"],
+    "steps": [
+      {"title": "Enter the test surface", "text": "Move the pointer inside the marked area so the page can show the movement it receives."},
+      {"title": "Try each button", "text": "Use left, right and middle buttons where present. Follow the labelled click and double-click prompts."},
+      {"title": "Move and scroll", "text": "Move across the surface to update the last-position dot and coordinate readout, then use the wheel or trackpad scroll gesture inside the page."},
+      {"title": "Reset the surface", "text": "Clear the counters, last wheel value, coordinates and position dot before another run."}
+    ],
+    "method": [
+      "The page observes pointer movement, button presses, double-clicks and wheel events only inside its test surface. It displays the last local coordinates, a position dot, move and button counts, double-click count, and the latest wheel direction and value.",
+      "These are browser events from the current interaction. The tool does not draw a movement trail, provide a drag target, or test touch gestures as a separate touchscreen instrument.",
+      "The tool confines capture to its own surface and clears the displayed session values when reset. It does not log pointer activity elsewhere on the page or outside the browser."
+    ],
+    "limits": [
+      "The page cannot measure sensor health, DPI, polling rate, lift-off distance, battery condition, or diagnose a mouse or trackpad.",
+      "Operating-system gestures, browser context menus, drivers and accessibility settings can intercept or transform input before it reaches the page."
+    ],
+    "troubleshooting": [
+      {"title": "The pointer does not draw", "text": "Move inside the outlined test surface and make sure an overlay or browser extension is not covering it. Reload if the surface did not initialise."},
+      {"title": "Right click opens a menu", "text": "That is normal browser behaviour on many systems. The page may suppress it only inside the test surface; use another app to test a system-level right-click action."},
+      {"title": "Scrolling does not register", "text": "Place the pointer over the test area and try a physical wheel. Trackpad gestures can be handled by the browser or operating system differently."},
+      {"title": "A click is missed or doubled", "text": "Repeat the test, reconnect a wireless receiver or cable, and compare in another application. Browser events alone cannot identify a hardware cause."}
+    ],
+    "faqs": [
+      {"question": "Can this measure my mouse polling rate?", "answer": "No. Browser event timing is affected by scheduling, rendering and the operating system, so it is not a reliable polling-rate measurement."},
+      {"question": "Does it work with a trackpad?", "answer": "It can show the pointer, click and wheel events the browser receives. Gesture behaviour differs by device and operating system."},
+      {"question": "Can it test touch input?", "answer": "This tool is for pointer events from a mouse or trackpad. A touchscreen is a separate input tool and is not tested here."},
+      {"question": "Why is a button named differently?", "answer": "Browsers report standard button identifiers, while a mouse may have programmable or vendor-specific controls that do not map directly."}
+    ],
+    "related": ["keyboard", "screen"]
+  },
+  {
+    "id": "screen",
+    "slug": "screen-test",
+    "title": "Screen Test — Inspect for Dead or Stuck Pixels | Test Institute",
+    "description": "Use full-screen colour fields and patterns to inspect your display manually for possible dead or stuck pixels.",
+    "eyebrow": "Keyboard & screen",
+    "intro": "Use plain colour fields to inspect the display at your own pace. The page makes a fixed mark easier to spot; it does not detect or diagnose pixels automatically.",
+    "shortDescription": "A manual, full-screen aid for checking a display for a fixed dark, bright or coloured point.",
+    "category": "Keyboard & screen",
+    "keywords": ["dead pixel test", "stuck pixel test", "test dead pixel", "screen pixel test"],
+    "steps": [
+      {"title": "Clean the screen first", "text": "Wipe away dust and fingerprints so a surface mark is not mistaken for a pixel issue."},
+      {"title": "Open a colour field", "text": "Show each solid field in full screen and look slowly across the panel from a normal viewing distance."},
+      {"title": "Compare the same spot", "text": "If a dot stands out, switch between fields and note whether it stays in the same physical location."},
+      {"title": "Exit comfortably", "text": "Leave full screen with the provided control or Escape. Stop if bright fields are uncomfortable for you."}
+    ],
+    "method": [
+      "The page displays solid colour fields and simple contrast patterns. Different backgrounds can make a dark, bright, or permanently coloured point easier for a person to notice than ordinary desktop content.",
+      "You inspect the display with your own eyes. If the same point remains visible across several fields, it is worth comparing with another application or device input before seeking service.",
+      "The page reports the current browser viewport size, selected pattern and your selected observation. Those values describe this browser session; they do not count pixels or establish the panel’s native characteristics."
+    ],
+    "limits": [
+      "A web page cannot programmatically see your panel, detect a dead or stuck pixel, certify brightness, verify HDR, or calibrate colour accuracy.",
+      "This is not an eyesight, colour-vision, flicker, refresh-rate, or medical test. Avoid flashing patterns; page animation timing is not a monitor refresh-rate measurement."
+    ],
+    "troubleshooting": [
+      {"title": "I see a spot on every field", "text": "Clean the panel, then check whether the spot stays fixed when you open another app or change the input. Dust, damage and panel behaviour can look similar."},
+      {"title": "The colours look different than expected", "text": "Night mode, colour profiles, HDR, ambient-light adjustment and browser rendering can change appearance. This page cannot calibrate or correct them."},
+      {"title": "Full screen will not open", "text": "Use the browser’s full-screen permission if prompted, or inspect the fields in the normal page view. Some embedded or managed browsers restrict full screen."},
+      {"title": "The display flickers or feels uncomfortable", "text": "Leave the test immediately and reduce brightness. Do not use this page to investigate a health symptom; check device settings or seek appropriate support."}
+    ],
+    "faqs": [
+      {"question": "What is the difference between a dead and a stuck pixel?", "answer": "A dead pixel may appear dark, while a stuck pixel may remain bright or coloured. This page cannot determine which condition you have; it only helps you inspect a fixed spot."},
+      {"question": "Can the test repair a stuck pixel?", "answer": "No. It provides static inspection fields and does not claim to repair panel hardware."},
+      {"question": "Can it test my monitor’s refresh rate?", "answer": "No. Animation-frame timing reflects the page, browser and system scheduling, not a direct measurement of monitor refresh hardware."},
+      {"question": "Why do the fields not fill every screen?", "answer": "Browser chrome, device cut-outs, zoom and full-screen permissions can affect the visible area. Use the full-screen control where available."}
+    ],
+    "related": ["keyboard", "mouse"]
+  },
+  {
+    "id": "touch",
+    "slug": "touchscreen-test",
+    "title": "Touchscreen Test — Check Taps and Touch Input | Test Institute",
+    "description": "Tap, press and move on a local surface to see the touch or pointer events your browser receives.",
+    "eyebrow": "Input devices",
+    "intro": "Use the test surface with a finger or stylus to check whether touch input reaches the browser. The page reports only what happens inside that surface.",
+    "shortDescription": "A local touch-input check for taps, movement and the type of pointer your browser reports.",
+    "category": "Input devices",
+    "keywords": ["touchscreen test", "touch screen test", "test touch screen", "touch test", "tablet touch test"],
+    "steps": [
+      {"title": "Tap the surface", "text": "Tap once in several areas. The page marks the last point it received."},
+      {"title": "Move slowly", "text": "Keep a finger or stylus on the surface and move it across the area to check for a continuous response."},
+      {"title": "Try the affected area", "text": "If part of a screen is in doubt, use that part of the visible test surface and compare with a nearby area."},
+      {"title": "Compare before deciding", "text": "Try another app or restart the device before treating a missing event as a hardware fault."}
+    ],
+    "method": [
+      "The page listens for pointer events inside its own test surface. It can show the most recent position, the pointer type reported by the browser, and whether a press or release arrived.",
+      "A received event means this browser received that interaction in this area at that moment. It does not reveal the condition of the touch panel, screen protector, digitizer, firmware or device calibration.",
+      "The page does not record input outside the marked surface and does not save your touches. Reset clears the current local observation."
+    ],
+    "limits": [
+      "This is not a multi-touch, pressure, palm-rejection, latency or touch-panel calibration test.",
+      "Browser gestures, accessibility features, an overlay, a damaged screen protector or the operating system can change what reaches the page."
+    ],
+    "troubleshooting": [
+      {"title": "Nothing happens when I tap", "text": "Make sure the page is fully loaded and tap inside the marked surface. If a browser or app overlay is covering it, close that first."},
+      {"title": "The wrong point is marked", "text": "Check screen zoom, rotation and any display scaling setting. A browser can report a local position even when the device’s visual calibration feels wrong."},
+      {"title": "One area does not respond", "text": "Clean and dry the display, remove a case or screen protector if appropriate, then compare in another app. This page cannot diagnose the cause."},
+      {"title": "I am using a mouse", "text": "A mouse can still activate the surface, but it is reported as a mouse pointer. Use a finger or compatible stylus to check touch input specifically."}
+    ],
+    "faqs": [
+      {"question": "Does this test support a stylus?", "answer": "It can show the pointer type that the browser reports. Stylus features such as pressure and tilt are not assessed by this basic check."},
+      {"question": "Can it find dead areas on my touchscreen?", "answer": "It can show whether a pointer event arrived in the part of the test surface you used. Confirm any suspected area in another app before drawing conclusions."},
+      {"question": "Does it save my touches?", "answer": "No. The page keeps only the current local result while it is open and does not upload touch data."},
+      {"question": "Can it test several fingers at once?", "answer": "No. This page is designed for a simple single-pointer check rather than a multi-touch capability test."}
+    ],
+    "related": ["mouse", "screen"]
+  },
+  {
+    "id": "gamepad",
+    "slug": "gamepad-test",
+    "title": "Gamepad Test — Check Controller Buttons and Sticks | Test Institute",
+    "description": "Connect a controller and see the buttons, sticks and triggers your browser reports through the Gamepad API.",
+    "eyebrow": "Input devices",
+    "intro": "Connect a controller, press a button, and see the gamepad input your browser reports. This is a quick browser check, not a full controller diagnosis.",
+    "shortDescription": "A local browser check for connected controller buttons, sticks and trigger values.",
+    "category": "Input devices",
+    "keywords": ["gamepad test", "controller test", "test controller", "joystick test", "game controller test"],
+    "steps": [
+      {"title": "Connect the controller", "text": "Plug in or pair the controller using your operating system, then return to this page."},
+      {"title": "Press a button", "text": "Choose Check for controller and press any button if the browser has not listed the device yet."},
+      {"title": "Move a stick or trigger", "text": "Use one control at a time and watch the browser-reported values change."},
+      {"title": "Compare elsewhere", "text": "If a control is absent here, compare it in a game or system controller settings before deciding the hardware has failed."}
+    ],
+    "method": [
+      "Where supported, the browser exposes connected controllers through the Gamepad API. The page reads the active controller’s reported buttons and axes during the current session.",
+      "A changing value shows that this browser received a change from that controller. Button names, layouts, dead zones and driver handling vary by device and browser.",
+      "The page does not install drivers, change mappings or send input to a game. It only displays values that the browser exposes locally."
+    ],
+    "limits": [
+      "This is not a vibration, wireless-range, battery, dead-zone, latency or controller-calibration test.",
+      "Some browsers do not support the Gamepad API fully, and an operating system or game launcher may hold or transform controller input before it reaches the browser."
+    ],
+    "troubleshooting": [
+      {"title": "No controller appears", "text": "Reconnect or re-pair the controller, then press a button while this page is open. Check whether the operating system sees it first."},
+      {"title": "The wrong controller appears", "text": "Disconnect other controllers where practical and reload the page. Browsers may list devices in a different order from a game."},
+      {"title": "A stick does not return to zero", "text": "Small reported values can reflect a controller’s current output or its configured dead zone. Compare the same control in system settings or another game."},
+      {"title": "Buttons work in a game but not here", "text": "Browser support and permissions differ from native games. Try a current browser and confirm that no extension or browser setting blocks gamepad access."}
+    ],
+    "faqs": [
+      {"question": "Does this work with PlayStation, Xbox or Nintendo controllers?", "answer": "It can work with controllers that the operating system and browser expose through the Gamepad API. The labels and available controls can differ by model."},
+      {"question": "Can it calibrate my controller?", "answer": "No. It displays browser-reported input only and does not modify controller settings."},
+      {"question": "Can it test controller vibration?", "answer": "No. This page does not test rumble or other haptic features."},
+      {"question": "Why do I need to press a button first?", "answer": "Many browsers reveal a connected controller only after an interaction, which helps prevent passive device detection."}
+    ],
+    "related": ["keyboard", "mouse"]
+  }
+]
